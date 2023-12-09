@@ -21,5 +21,9 @@ class Coins extends SpriteAnimationComponent
         stepTime: 1,
       ),
     );
+
+    add(
+      RectangleHitbox(),
+    );
   }
 }

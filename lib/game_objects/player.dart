@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
+import 'package:snowballer/game_objects/coins.dart';
 import 'package:snowballer/game_objects/wall01.dart';
 
 enum PlayerDirection { none, up, right, down, left }
@@ -133,6 +134,10 @@ class Player extends SpriteAnimationComponent
       } else if (currentPlayerDirection == PlayerDirection.left) {
         position.x += 3;
       }
+    }
+
+    if (other is Coins) {
+      other.removeFromParent();
     }
 
     super.onCollision(intersectionPoints, other);
