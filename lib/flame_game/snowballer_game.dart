@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:snowballer/game_objects/coins.dart';
@@ -6,7 +7,8 @@ import 'package:snowballer/game_objects/flaric.dart';
 import 'package:snowballer/game_objects/player.dart';
 import 'package:snowballer/game_objects/wall01.dart';
 
-class SnowballerGame extends FlameGame with HasCollisionDetection {
+class SnowballerGame extends FlameGame
+    with HasCollisionDetection, TapCallbacks {
   SnowballerGame();
 
   late Player player;
@@ -35,6 +37,12 @@ class SnowballerGame extends FlameGame with HasCollisionDetection {
   late Wall01 wall18;
   late Wall01 wall19;
   late Wall01 wall20;
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    print('Wanna be a Snowballer!');
+    super.onTapDown(event);
+  }
 
   @override
   final world = World();

@@ -40,7 +40,8 @@ class Player extends SpriteAnimationComponent
     PositionComponent other,
   ) {
     if (other is Wall01) {
-      other.removeFromParent();
+      position.y -= 3;
+      // other.removeFromParent();
     }
 
     super.onCollision(intersectionPoints, other);
