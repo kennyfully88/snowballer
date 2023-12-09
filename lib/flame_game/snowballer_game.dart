@@ -40,7 +40,8 @@ class SnowballerGame extends FlameGame
 
   @override
   void onTapDown(TapDownEvent event) {
-    print('Wanna be a Snowballer!');
+    player.setPlayerDirection();
+
     super.onTapDown(event);
   }
 

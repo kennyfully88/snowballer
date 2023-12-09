@@ -23,10 +23,7 @@ class Wall01 extends SpriteAnimationComponent
     );
 
     add(
-      RectangleHitbox.relative(
-        parentSize: Vector2.all(16),
-        Vector2.all(0.9),
-      ),
+      RectangleHitbox(),
     );
   }
 }
