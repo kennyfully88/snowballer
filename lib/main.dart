@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snowballer/providers/game_logic.dart';
 import 'package:snowballer/providers/settings.dart';
 import 'package:snowballer/screens/splash_screen/splash_screen.dart';
 
@@ -11,6 +12,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider<GameLogic>(
+          create: (_) => GameLogic(),
+        ),
         ChangeNotifierProvider<Settings>(
           create: (_) => Settings(),
         ),
