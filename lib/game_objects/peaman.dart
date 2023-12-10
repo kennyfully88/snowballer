@@ -2,9 +2,9 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
 
-class Flaric extends SpriteAnimationComponent
+class Peaman extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<SnowballerGame> {
-  Flaric({
+  Peaman({
     required super.position,
   }) : super(
           size: Vector2.all(48),
@@ -14,11 +14,11 @@ class Flaric extends SpriteAnimationComponent
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('flaric.png'),
+      game.images.fromCache('peaman.png'),
       SpriteAnimationData.sequenced(
         amount: 2,
         textureSize: Vector2.all(16),
-        stepTime: 0.25,
+        stepTime: 0.5,
       ),
     );
 

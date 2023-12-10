@@ -2,6 +2,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
 import 'package:snowballer/game_objects/coins.dart';
+import 'package:snowballer/game_objects/flaric.dart';
+import 'package:snowballer/game_objects/peaman.dart';
 import 'package:snowballer/game_objects/wall01.dart';
 
 enum PlayerDirection { none, up, right, down, left }
@@ -139,7 +141,23 @@ class Player extends SpriteAnimationComponent
       }
     }
 
+    if (other is Flaric) {
+      if (currentPlayerDirection == PlayerDirection.up) {
+        position.y += 3;
+      } else if (currentPlayerDirection == PlayerDirection.right) {
+        position.x -= 3;
+      } else if (currentPlayerDirection == PlayerDirection.down) {
+        position.y -= 3;
+      } else if (currentPlayerDirection == PlayerDirection.left) {
+        position.x += 3;
+      }
+    }
+
     if (other is Coins) {
+      other.removeFromParent();
+    }
+
+    if (other is Peaman) {
       other.removeFromParent();
     }
 
