@@ -12,7 +12,9 @@ import 'package:snowballer/game_objects/wall01.dart';
 
 class SnowballerGame extends FlameGame
     with HasCollisionDetection, TapCallbacks {
-  SnowballerGame();
+  SnowballerGame({required this.gameEnder});
+
+  Function gameEnder;
 
   late Player player;
 
@@ -259,13 +261,15 @@ class SnowballerGame extends FlameGame
       'wall_01.png',
     ]);
 
-    FlameAudio.loop('snowballer.wav');
+    FlameAudio.bgm.initialize();
+
+    FlameAudio.bgm.play('snowballer.wav');
 
     cameraComponent = CameraComponent(
       world: world,
     );
 
-    player = Player(position: Vector2(96, 96));
+    player = Player(position: Vector2(96, 96), gameEnder: gameEnder);
 
     flaric = Flaric(position: Vector2(384, 48));
 

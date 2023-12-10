@@ -1,8 +1,10 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
 import 'package:snowballer/game_objects/coins.dart';
 import 'package:snowballer/game_objects/flaric.dart';
+import 'package:snowballer/game_objects/lava.dart';
 import 'package:snowballer/game_objects/peaman.dart';
 import 'package:snowballer/game_objects/wall01.dart';
 
@@ -12,10 +14,15 @@ class Player extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<SnowballerGame> {
   Player({
     required super.position,
+    required this.gameEnder,
   }) : super(
           size: Vector2.all(48),
           anchor: Anchor.bottomRight,
         );
+
+  Function gameEnder;
+
+  bool isGameOver = false;
 
   /// The previous direction of the player
   PlayerDirection previousPlayerDirection = PlayerDirection.none;
@@ -55,6 +62,8 @@ class Player extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
+    if (isGameOver) return;
+
     if (currentPlayerDirection == PlayerDirection.up) {
       position.y -= 3;
 
@@ -125,10 +134,32 @@ class Player extends SpriteAnimationComponent
   }
 
   @override
-  void onCollision(
+  Future<void> onCollision(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
-  ) {
+  ) async {
+    if (isGameOver) return;
+
+    if (other is Coins) {
+      other.removeFromParent();
+    }
+
+    if (other is Flaric) {
+      isGameOver = true;
+      gameEnder();
+      FlameAudio.bgm.pause();
+    }
+
+    if (other is Lava) {
+      isGameOver = true;
+      gameEnder();
+      FlameAudio.bgm.pause();
+    }
+
+    if (other is Peaman) {
+      other.removeFromParent();
+    }
+
     if (other is Wall01) {
       if (currentPlayerDirection == PlayerDirection.up) {
         position.y += 3;
@@ -139,26 +170,6 @@ class Player extends SpriteAnimationComponent
       } else if (currentPlayerDirection == PlayerDirection.left) {
         position.x += 3;
       }
-    }
-
-    if (other is Flaric) {
-      if (currentPlayerDirection == PlayerDirection.up) {
-        position.y += 3;
-      } else if (currentPlayerDirection == PlayerDirection.right) {
-        position.x -= 3;
-      } else if (currentPlayerDirection == PlayerDirection.down) {
-        position.y -= 3;
-      } else if (currentPlayerDirection == PlayerDirection.left) {
-        position.x += 3;
-      }
-    }
-
-    if (other is Coins) {
-      other.removeFromParent();
-    }
-
-    if (other is Peaman) {
-      other.removeFromParent();
     }
 
     super.onCollision(intersectionPoints, other);

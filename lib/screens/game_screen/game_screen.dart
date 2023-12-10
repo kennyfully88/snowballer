@@ -7,7 +7,11 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final snowBallerGame = SnowballerGame();
+    void endGame() {
+      Navigator.pop(context);
+    }
+
+    final snowBallerGame = SnowballerGame(gameEnder: endGame);
 
     return PopScope(
       onPopInvoked: (didPop) => false,
