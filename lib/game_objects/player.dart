@@ -1,3 +1,5 @@
+import 'dart:async' as syncro;
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -142,22 +144,32 @@ class Player extends SpriteAnimationComponent
 
     if (other is Coins) {
       other.removeFromParent();
+      FlameAudio.play('got_item.wav');
     }
 
     if (other is Flaric) {
       isGameOver = true;
-      gameEnder();
       FlameAudio.bgm.pause();
+      FlameAudio.play('game_over.wav');
+
+      syncro.Timer(const Duration(milliseconds: 3000), () {
+        gameEnder();
+      });
     }
 
     if (other is Lava) {
       isGameOver = true;
-      gameEnder();
       FlameAudio.bgm.pause();
+      FlameAudio.play('game_over.wav');
+
+      syncro.Timer(const Duration(milliseconds: 3000), () {
+        gameEnder();
+      });
     }
 
     if (other is Peaman) {
       other.removeFromParent();
+      FlameAudio.play('got_item.wav');
     }
 
     if (other is Wall01) {
