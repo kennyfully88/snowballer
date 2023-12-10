@@ -1,4 +1,4 @@
-import 'dart:async' as syncro;
+import 'dart:async' as synchro;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -25,6 +25,7 @@ class Player extends SpriteAnimationComponent
   Function gameEnder;
 
   bool isGameOver = false;
+  bool gameOverAnimation = false;
 
   /// The previous direction of the player
   PlayerDirection previousPlayerDirection = PlayerDirection.none;
@@ -64,7 +65,24 @@ class Player extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    if (isGameOver) return;
+    if (isGameOver && gameOverAnimation) {
+      return;
+    }
+
+    if (isGameOver) {
+      animation = SpriteAnimation.fromFrameData(
+        game.images.fromCache('player.png'),
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.5,
+          textureSize: Vector2.all(16),
+          texturePosition: Vector2(0, 64),
+        ),
+      );
+
+      gameOverAnimation = true;
+      return;
+    }
 
     if (currentPlayerDirection == PlayerDirection.up) {
       position.y -= 3;
@@ -152,7 +170,17 @@ class Player extends SpriteAnimationComponent
       FlameAudio.bgm.pause();
       FlameAudio.play('game_over.wav');
 
-      syncro.Timer(const Duration(milliseconds: 3000), () {
+      if (currentPlayerDirection == PlayerDirection.up) {
+        position.y += 3;
+      } else if (currentPlayerDirection == PlayerDirection.right) {
+        position.x -= 3;
+      } else if (currentPlayerDirection == PlayerDirection.down) {
+        position.y -= 3;
+      } else if (currentPlayerDirection == PlayerDirection.left) {
+        position.x += 3;
+      }
+
+      synchro.Timer(const Duration(milliseconds: 3000), () {
         gameEnder();
       });
     }
@@ -162,7 +190,7 @@ class Player extends SpriteAnimationComponent
       FlameAudio.bgm.pause();
       FlameAudio.play('game_over.wav');
 
-      syncro.Timer(const Duration(milliseconds: 3000), () {
+      synchro.Timer(const Duration(milliseconds: 3000), () {
         gameEnder();
       });
     }
