@@ -3,7 +3,6 @@ import 'dart:async' as synchro;
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
 import 'package:snowballer/game_objects/coins.dart';
@@ -97,8 +96,6 @@ class Player extends SpriteAnimationComponent
     if (currentPlayerDirection == PlayerDirection.up) {
       position.y -= 3;
 
-      if (kIsWeb) position.y -= webPlatformBoost;
-
       if (previousPlayerDirection != currentPlayerDirection) {
         previousPlayerDirection = currentPlayerDirection;
         animation = SpriteAnimation.fromFrameData(
@@ -114,8 +111,6 @@ class Player extends SpriteAnimationComponent
       }
     } else if (currentPlayerDirection == PlayerDirection.right) {
       position.x += 3;
-
-      if (kIsWeb) position.x += webPlatformBoost;
 
       if (previousPlayerDirection != currentPlayerDirection) {
         previousPlayerDirection = currentPlayerDirection;
@@ -133,8 +128,6 @@ class Player extends SpriteAnimationComponent
     } else if (currentPlayerDirection == PlayerDirection.down) {
       position.y += 3;
 
-      if (kIsWeb) position.y += webPlatformBoost;
-
       if (previousPlayerDirection != currentPlayerDirection) {
         previousPlayerDirection = currentPlayerDirection;
         animation = SpriteAnimation.fromFrameData(
@@ -150,8 +143,6 @@ class Player extends SpriteAnimationComponent
       }
     } else if (currentPlayerDirection == PlayerDirection.left) {
       position.x -= 3;
-
-      if (kIsWeb) position.x -= webPlatformBoost;
 
       if (previousPlayerDirection != currentPlayerDirection) {
         previousPlayerDirection = currentPlayerDirection;
@@ -195,16 +186,12 @@ class Player extends SpriteAnimationComponent
 
         if (currentPlayerDirection == PlayerDirection.up) {
           position.y += 3;
-          if (kIsWeb) position.y += webPlatformBoost;
         } else if (currentPlayerDirection == PlayerDirection.right) {
           position.x -= 3;
-          if (kIsWeb) position.x -= webPlatformBoost;
         } else if (currentPlayerDirection == PlayerDirection.down) {
           position.y -= 3;
-          if (kIsWeb) position.y -= webPlatformBoost;
         } else if (currentPlayerDirection == PlayerDirection.left) {
           position.x += 3;
-          if (kIsWeb) position.x += webPlatformBoost;
         }
 
         synchro.Timer(const Duration(milliseconds: 3000), () {
@@ -247,16 +234,12 @@ class Player extends SpriteAnimationComponent
     if (other is Wall01) {
       if (currentPlayerDirection == PlayerDirection.up) {
         position.y += 3;
-        if (kIsWeb) position.y += webPlatformBoost;
       } else if (currentPlayerDirection == PlayerDirection.right) {
         position.x -= 3;
-        if (kIsWeb) position.x -= webPlatformBoost;
       } else if (currentPlayerDirection == PlayerDirection.down) {
         position.y -= 3;
-        if (kIsWeb) position.y -= webPlatformBoost;
       } else if (currentPlayerDirection == PlayerDirection.left) {
         position.x += 3;
-        if (kIsWeb) position.x += webPlatformBoost;
       }
     }
 
