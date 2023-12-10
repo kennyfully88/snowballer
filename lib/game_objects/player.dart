@@ -3,12 +3,15 @@ import 'dart:async' as synchro;
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:snowballer/flame_game/snowballer_game.dart';
 import 'package:snowballer/game_objects/coins.dart';
 import 'package:snowballer/game_objects/flaric.dart';
 import 'package:snowballer/game_objects/lava.dart';
 import 'package:snowballer/game_objects/peaman.dart';
 import 'package:snowballer/game_objects/wall01.dart';
+import 'package:snowballer/providers/game_logic.dart';
 
 enum PlayerDirection { none, up, right, down, left }
 
@@ -17,12 +20,14 @@ class Player extends SpriteAnimationComponent
   Player({
     required super.position,
     required this.gameEnder,
+    required this.context,
   }) : super(
           size: Vector2.all(48),
           anchor: Anchor.bottomRight,
         );
 
-  Function gameEnder;
+  final Function gameEnder;
+  final BuildContext context;
 
   bool isGameOver = false;
   bool gameOverAnimation = false;
@@ -162,6 +167,7 @@ class Player extends SpriteAnimationComponent
 
     if (other is Coins) {
       other.removeFromParent();
+      context.read<GameLogic>().addCoin();
       FlameAudio.play('got_item.wav');
     }
 

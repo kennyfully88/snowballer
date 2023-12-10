@@ -5,6 +5,7 @@ class GameLogic extends ChangeNotifier {
 
   void addCoin() {
     coins++;
+    notifyListeners();
   }
 
   void resetGame() {

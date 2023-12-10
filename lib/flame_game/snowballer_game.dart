@@ -12,9 +12,11 @@ import 'package:snowballer/game_objects/wall01.dart';
 
 class SnowballerGame extends FlameGame
     with HasCollisionDetection, TapCallbacks {
-  SnowballerGame({required this.gameEnder});
+  SnowballerGame({required this.gameEnder, required this.context});
 
   Function gameEnder;
+
+  final BuildContext context;
 
   late Player player;
 
@@ -386,7 +388,11 @@ class SnowballerGame extends FlameGame
       world: world,
     );
 
-    player = Player(position: Vector2(96, 96), gameEnder: gameEnder);
+    player = Player(
+      position: Vector2(96, 96),
+      gameEnder: gameEnder,
+      context: context,
+    );
 
     flaric = Flaric(position: Vector2(384, 48));
 
@@ -446,7 +452,7 @@ class SnowballerGame extends FlameGame
     renderMapArea(mapAreaD2, 1, 3);
     renderMapArea(mapAreaD3, 2, 3);
     renderMapArea(mapAreaD4, 3, 3);
-    renderMapArea(mapAreaB5, 4, 3);
+    renderMapArea(mapAreaD5, 4, 3);
     // E
     renderMapArea(mapAreaE1, 0, 4);
     renderMapArea(mapAreaE2, 1, 4);
