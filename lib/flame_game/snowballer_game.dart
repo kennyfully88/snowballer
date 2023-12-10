@@ -19,17 +19,17 @@ class SnowballerGame extends FlameGame
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
-  final List tilesList = [
+  final List mapAreaA1 = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 3, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 2, 2, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 2, 0, 1, 1, 1, 1],
   ];
 
   @override
@@ -63,23 +63,31 @@ class SnowballerGame extends FlameGame
 
     flaric = Flaric(position: Vector2(384, 48));
 
-    for (int i = 0; i < tilesList.length; i++) {
-      for (int j = 0; j < tilesList[i].length; j++) {
-        if (tilesList[i][j] == 1) {
-          Wall01 tile = Wall01(
-              position: Vector2((48 * j).toDouble(), (48 * i).toDouble()));
-          world.add(tile);
-        } else if (tilesList[i][j] == 2) {
-          Coins tile = Coins(
-              position: Vector2((48 * j).toDouble(), (48 * i).toDouble()));
-          world.add(tile);
-        } else if (tilesList[i][j] == 3) {
-          Flaric tile = Flaric(
-              position: Vector2((48 * j).toDouble(), (48 * i).toDouble()));
-          world.add(tile);
+    void renderMapArea(mapAreaName, mapX, mapY) {
+      for (int i = 0; i < mapAreaName.length; i++) {
+        for (int j = 0; j < mapAreaName[i].length; j++) {
+          if (mapAreaName[i][j] == 1) {
+            Wall01 tile = Wall01(
+                position: Vector2(((mapX * 480) + (48 * j)).toDouble(),
+                    ((mapY * 480) + (48 * i)).toDouble()));
+            world.add(tile);
+          } else if (mapAreaName[i][j] == 2) {
+            Coins tile = Coins(
+                position: Vector2(((mapX * 480) + (48 * j)).toDouble(),
+                    ((mapY * 480) + (48 * i)).toDouble()));
+            world.add(tile);
+          } else if (mapAreaName[i][j] == 3) {
+            Flaric tile = Flaric(
+                position: Vector2(((mapX * 480) + (48 * j)).toDouble(),
+                    ((mapY * 480) + (48 * i)).toDouble()));
+            world.add(tile);
+          }
         }
       }
     }
+
+    renderMapArea(mapAreaA1, 0, 0);
+    renderMapArea(mapAreaA1, 1, 0);
 
     world.add(player);
     world.add(flaric);
