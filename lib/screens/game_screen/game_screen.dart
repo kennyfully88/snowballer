@@ -24,18 +24,18 @@ class GameScreen extends StatelessWidget {
       child: PopScope(
         onPopInvoked: (didPop) => false,
         canPop: false,
-        child: Stack(
-          children: [
-            Container(
-              color: const Color(0xFFFFFFFF),
-              child: SafeArea(
-                child: GameWidget<SnowballerGame>(
+        child: Container(
+          color: const Color(0xFFFFFFFF),
+          child: SafeArea(
+            child: Stack(
+              children: [
+                GameWidget<SnowballerGame>(
                   game: snowBallerGame,
                 ),
-              ),
+                const CoinCounter(),
+              ],
             ),
-            const CoinCounter(),
-          ],
+          ),
         ),
       ),
     );
