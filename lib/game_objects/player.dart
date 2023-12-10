@@ -44,7 +44,10 @@ class Player extends SpriteAnimationComponent
     );
 
     add(
-      RectangleHitbox(),
+      RectangleHitbox.relative(
+        Vector2.all(0.8),
+        parentSize: Vector2.all(48),
+      ),
     );
   }
 
